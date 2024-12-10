@@ -423,6 +423,13 @@ export function compareInteriorLocation(
   return compareAnyInteriors(CURRENT_XCM_VERSION, location1, location2);
 }
 
+export function isInteriorLocationEqual(
+  location1: InteriorLocation,
+  location2: InteriorLocation,
+) {
+  return compareInteriorLocation(location1, location2) === 0;
+}
+
 /**
  * Compares two asset IDs of any type based on the XCM version.
  *

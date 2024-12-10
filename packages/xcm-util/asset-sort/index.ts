@@ -9,4 +9,5 @@ export {
   compareAnyAsset as compareAsset,
   compareInteriorLocation as compareInteriorLocation,
   compareJunction,
+  isInteriorLocationEqual,
 } from './compare-assets';

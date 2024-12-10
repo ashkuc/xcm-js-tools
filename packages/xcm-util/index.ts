@@ -5,6 +5,7 @@ export {
   compareAsset,
   compareAssetId,
   compareInteriorLocation,
+  isInteriorLocationEqual,
 } from './asset-sort';
 
 export {

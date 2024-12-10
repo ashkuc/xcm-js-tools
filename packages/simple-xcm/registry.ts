@@ -22,7 +22,7 @@ import {
   relaychainUniversalLocation,
 } from './main-utils';
 import {
-  compareInteriorLocation,
+  isInteriorLocationEqual,
   concatInterior,
   convertObjToJsonString,
   sanitizeInterior,
@@ -439,14 +439,24 @@ function providersToWssEndpoints(providers: Record<string, string>): string[] {
   );
 }
 
+/**
+ * Converts a chain location to the universal location of its native currency.
+ * Handles some known special cases.
+ * @param chainLocation
+ * @returns The universal location of the native currency.
+ */
 function chainLocationToNativeCurrencyLocation(
   chainLocation: InteriorLocation,
 ): InteriorLocation {
   const acalaLocation = parachainUniversalLocation('polkadot', 2000n);
   const karuraLocation = parachainUniversalLocation('kusama', 2000n);
 
-  if (!compareInteriorLocation(chainLocation, acalaLocation)) {
-    return concatInterior(acalaLocation, {
+  const polkadotAssetHubLocation = parachainUniversalLocation('polkadot', 1000n);
+  const kusamaAssetHubLocation = parachainUniversalLocation('kusama', 1000n);
+  const westendAssetHubLocation = parachainUniversalLocation('westend', 1000n);
+
+  if (isInteriorLocationEqual(chainLocation, acalaLocation)) {
+    return concatInterior(chainLocation, {
       x1: [
         {
           generalKey: {
@@ -456,8 +466,10 @@ function chainLocationToNativeCurrencyLocation(
         },
       ],
     });
-  } else if (!compareInteriorLocation(chainLocation, karuraLocation)) {
-    return concatInterior(karuraLocation, {
+  }
+
+  if (isInteriorLocationEqual(chainLocation, karuraLocation)) {
+    return concatInterior(chainLocation, {
       x1: [
         {
           generalKey: {
@@ -467,7 +479,19 @@ function chainLocationToNativeCurrencyLocation(
         },
       ],
     });
-  } else {
-    return chainLocation;
   }
+
+  if (isInteriorLocationEqual(chainLocation, polkadotAssetHubLocation)) {
+    return relaychainUniversalLocation('polkadot');
+  }
+
+  if (isInteriorLocationEqual(chainLocation, kusamaAssetHubLocation)) {
+    return relaychainUniversalLocation('kusama');
+  }
+
+  if (isInteriorLocationEqual(chainLocation, westendAssetHubLocation)) {
+    return relaychainUniversalLocation('westend');
+  }
+
+  return chainLocation;
 }
