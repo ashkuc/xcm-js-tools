@@ -173,8 +173,16 @@ export class Registry {
    * The currency's info will be fetched from the chain's metadata.
    *
    * The currency will be stored with two symbols:
-   * the actual symbol from the chain's metadata
-   * and an alternative symbol coinciding with the chain's name.
+   * - The actual symbol from the chain's metadata.
+   * - An alternative symbol matching the chain's name.
+   *
+   * Note: This is a best-effort operation, relying on how native currencies are
+   * typically represented in standard chains. Some known edge cases like Acala,
+   * Karura and AssetHub parachains are handled (refer to
+   * `chainLocationToNativeCurrencyLocation` function for more details). But
+   * other unconventional representations of native currencies may require
+   * additional handling.
+   *
    * @param chainName - The name of the chain.
    * @returns A promise that resolves when the currency is added.
    * @example
