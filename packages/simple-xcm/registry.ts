@@ -1,12 +1,4 @@
 import {EndpointOption} from '@polkadot/apps-config/endpoints/types';
-import {
-  prodRelayPolkadot,
-  prodParasPolkadotCommon,
-  prodParasPolkadot,
-  prodRelayKusama,
-  prodParasKusamaCommon,
-  prodParasKusama,
-} from '@polkadot/apps-config';
 import {ApiPromise, WsProvider} from '@polkadot/api';
 import {
   ChainInfo,
@@ -119,20 +111,26 @@ export class Registry {
    * registry.addEcosystemChains('Polkadot');
    * ```
    */
-  addEcosystemChains(ecosystem: Ecosystem): Registry {
+  async addEcosystemChains(ecosystem: Ecosystem): Promise<Registry> {
+    const appsConfig = await import('@polkadot/apps-config').catch(() => null);
+
+    if (!appsConfig) {
+      throw new Error(`To use ${this.addEcosystemChains.name} method, please install the @polkadot/apps-config package`);
+    }
+
     switch (ecosystem) {
       case 'Polkadot':
         return this.#addRelayAndParachains(
           relaychainUniversalLocation('polkadot'),
-          prodRelayPolkadot,
-          [...prodParasPolkadotCommon, ...prodParasPolkadot],
+          appsConfig.prodRelayPolkadot,
+          [...appsConfig.prodParasPolkadotCommon, ...appsConfig.prodParasPolkadot],
         );
 
       case 'Kusama':
         return this.#addRelayAndParachains(
           relaychainUniversalLocation('kusama'),
-          prodRelayKusama,
-          [...prodParasKusamaCommon, ...prodParasKusama],
+          appsConfig.prodRelayKusama,
+          [...appsConfig.prodParasKusamaCommon, ...appsConfig.prodParasKusama],
         );
 
       default:

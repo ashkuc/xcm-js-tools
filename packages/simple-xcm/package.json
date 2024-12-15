@@ -9,10 +9,17 @@
     "@open-xcm-tools/xcm-types": "workspace:*",
     "@open-xcm-tools/xcm-util": "workspace:*",
     "@polkadot/api": "13.2.1",
-    "@polkadot/apps-config": "^0.144.1",
     "@polkadot/util": "^13.0.2"
   },
   "devDependencies": {
     "tsconfig-paths": "^4.2.0"
+  },
+  "peerDependencies": {
+    "@polkadot/apps-config": "^0.144.1"
+  },
+  "peerDependenciesMeta": {
+    "@polkadot/apps-config": {
+      "optional": true
+    }
   }
 }

@@ -41,23 +41,17 @@ The "simple-xcm" library is built upon smaller, modular components that can be u
 - `xcm-util` module provides a comprehensive set of functions for sanitizing and validating various assets data structures in the context of cross-chain messaging (XCM).
 - `xcm-estimate` module provides general functionality for fee estimation.
 
-### Filling a `Registry` object
+### Initializing a `Registry` object
 
 #### Registering Chains
 
-To start using the `Registry`, you need to add ecosystems of parachains.
-
-```typescript
-const registry = new Registry()
-  .addEcosystemChains('Polkadot')
-  .addEcosystemChains('Kusama');
-```
-
-If you want to add an external parachain (not from a connected ecosystem), you can use the `Registry.addChain` function, which takes a `ChainInfo` object as a parameter.
+The most flexible way to use the Registry is by adding parachains manually with the Registry.addChain method. This method allows you to register any chain, including external parachains, by providing a ChainInfo object.
 
 Example of adding chain to `Registry` instance:
 
 ```typescript
+const registry = new Registry();
+
 registry.addChain(<ChainInfo>{
   identity: {
     name: 'AssetHub',
@@ -69,6 +63,23 @@ registry.addChain(<ChainInfo>{
     // Add more endpoints as needed
   ],
 });
+```
+
+If you want to quickly populate the Registry with predefined ecosystems of parachains (e.g., Polkadot or Kusama), you can use the addEcosystemChains method.
+
+However, this method depends on the optional @polkadot/apps-config package.
+
+```shell
+yarn add @polkadot/apps-config
+```
+
+Example of adding ecosystems:
+
+```typescript
+const registry = new Registry();
+
+await registry.addEcosystemChains('polkadot');
+await registry.addEcosystemChains('kusama');
 ```
 
 #### Registering Currencies
