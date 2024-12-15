@@ -1,4 +1,3 @@
-import {EndpointOption} from '@polkadot/apps-config/endpoints/types';
 import {ApiPromise, WsProvider} from '@polkadot/api';
 import {
   ChainInfo,
@@ -20,6 +19,15 @@ import {
   sanitizeInterior,
   sanitizeLocation,
 } from '@open-xcm-tools/xcm-util';
+
+/**
+ * Simplified version of the `EndpointOption` type from the `@polkadot/apps-config` package.
+ */
+type EndpointOption = {
+  paraId?: number;
+  providers: Record<string, string>;
+  text: string;
+}
 
 /**
  * A `Registry` object can store and then provide information about chains, currencies, and locations.

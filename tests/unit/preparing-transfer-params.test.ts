@@ -6,9 +6,11 @@ import {describe, expect, test} from 'vitest';
 
 describe('preparing transfer params test', () => {
   describe('preparinhg tests', async () => {
-    const registry = new Registry()
-      .addEcosystemChains('Polkadot')
-      .addRelativeLocation(
+    const registry = new Registry();
+
+    await registry.addEcosystemChains('Polkadot');
+
+    registry.addRelativeLocation(
         'Test Account',
         location(0n, [
           {
@@ -18,6 +20,7 @@ describe('preparing transfer params test', () => {
           },
         ]),
       );
+
     await registry.addNativeCurrency('Polkadot');
     const xcm = await registry.connectXcm('AssetHub');
 

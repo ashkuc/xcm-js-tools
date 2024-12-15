@@ -146,7 +146,7 @@ export function extrinsicRelayRootXcmSendUnpaidTransact(
   api: ApiPromise,
   tx: SubmittableExtrinsic<'promise'>,
   destParaId: number,
-) {
+): SubmittableExtrinsic<'promise'> {
   return api.tx.sudo.sudo(
     api.tx.xcmPallet.send(
       {

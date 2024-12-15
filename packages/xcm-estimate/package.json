@@ -9,8 +9,5 @@
     "@open-xcm-tools/xcm-util": "workspace:*",
     "@polkadot/api": "13.2.1",
     "@polkadot/util": "^13.0.2"
-  },
-  "devDependencies": {
-    "tsconfig-paths": "^4.2.0"
   }
 }
